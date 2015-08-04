@@ -1,4 +1,4 @@
-# uicolor-utilities (extension to UIColor) for iOS development
+# uicolor-utilities (category on UIColor) for iOS development
 
 Original Objective-C code by Erica Sadun.
 More info at http://arstechnica.com/apple/guides/2009/02/iphone-development-accessing-uicolor-components.ars
