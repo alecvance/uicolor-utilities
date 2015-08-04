@@ -1,3 +1,15 @@
+//
+//  UIColor-Expanded.h
+//  Aquarium
+//
+//  Created by Alec Vance on 9/14/10.
+//  Copyright 2010 Juggleware, LLC. All rights reserved.
+//
+//based on code from Erica Sadun at http://arstechnica.com/apple/guides/2009/02/iphone-development-accessing-uicolor-components.ars
+//
+// forked from https://github.com/thetaplab/uicolor-utilities
+//
+
 #import <UIKit/UIKit.h>
 
 #define SUPPORTS_UNDOCUMENTED_API	0
@@ -35,6 +47,10 @@
 - (UIColor *) colorByLighteningToColor:(UIColor *)color;
 - (UIColor *)  colorByDarkeningToColor:(UIColor *)color;
 
+//added by Alec 2010-09-16
+- (UIColor *) colorByMixingWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+- (UIColor *) colorByMixingWithColor:(UIColor *)color;
+
 - (NSString *)stringFromColor;
 - (NSString *)hexStringFromColor;
 
@@ -44,6 +60,7 @@
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert;
 
 + (UIColor *)colorWithName:(NSString *)cssColorName;
++(UIColor *)colorBetweenColor:(UIColor *)color1 andColor:(UIColor *)color2 onSpectrumAt:(CGFloat)position;
 
 @end
 

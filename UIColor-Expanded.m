@@ -1,6 +1,14 @@
+//
+//  UIColor-Expanded.m
+//  Aquarium
+//
+//  Created by Alec Vance on 9/14/10.
+//  Copyright 2010 Juggleware, LLC. All rights reserved.
+//
+
 #import "UIColor-Expanded.h"
 
-/*
+/* (Erica's notes)
  
  Thanks to Poltras, Millenomi, Eridius, Nownot, WhatAHam, jberry,
  and everyone else who helped out but whose name is inadvertantly omitted
@@ -279,13 +287,37 @@ static NSMutableDictionary *colorNameCache = nil;
 }
 
 - (UIColor *)colorByDarkeningToColor:(UIColor *)color {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [self colorByDarkeningToRed:r green:g blue:b alpha:1.0f];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [self colorByDarkeningToRed:r green:g blue:b alpha:1.0f];
 }
+
+//added by Alec 2010-09-16
+- (UIColor *) colorByMixingWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha{
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [UIColor colorWithRed:(r+red)/2.0
+                           green:(g+green)/2.0
+                            blue:(b+blue)/2.0
+                           alpha:(a+alpha)/2.0];
+    
+}
+- (UIColor *) colorByMixingWithColor:(UIColor *)color{
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    return [color colorByMixingWithRed:r green:g blue:b alpha:a];
+}
+
+
+
 
 #pragma mark String utilities
 
@@ -373,25 +405,55 @@ static NSMutableDictionary *colorNameCache = nil;
 
 // Lookup a color using css 3/svg color name
 + (UIColor *)colorWithName:(NSString *)cssColorName {
-	UIColor *color;
-	@synchronized(colorNameCache) {
-		// Look for the color in the cache
-		color = [colorNameCache objectForKey:cssColorName];
-		
-		if ((id)color == [NSNull null]) {
-			// If it wasn't there previously, it's still not there now
-			color = nil;
-		} else if (!color) {
-			// Color not in cache, so search for it now
-			color = [self searchForColorByName:cssColorName];
-			
-			// Set the value in cache, storing NSNull on failure
-			[colorNameCache setObject:(color ?: (id)[NSNull null])
-							   forKey:cssColorName];
-		}
-	}
-	
-	return color;
+    UIColor *color;
+    @synchronized(colorNameCache) {
+        // Look for the color in the cache
+        color = [colorNameCache objectForKey:cssColorName];
+        
+        if ((id)color == [NSNull null]) {
+            // If it wasn't there previously, it's still not there now
+            color = nil;
+        } else if (!color) {
+            // Color not in cache, so search for it now
+            color = [self searchForColorByName:cssColorName];
+            
+            // Set the value in cache, storing NSNull on failure
+            [colorNameCache setObject:(color ?: (id)[NSNull null])
+                               forKey:cssColorName];
+        }
+    }
+    
+    return color;
+}
+
++(UIColor *)colorBetweenColor:(UIColor *)color1 andColor:(UIColor *)color2 onSpectrumAt:(CGFloat)position{
+    
+    CGFloat r,g,b,a;
+    CGFloat r1,g1,b1,a1;
+    CGFloat r2,g2,b2,a2;
+    
+    NSAssert(color1.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    NSAssert(color2.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    NSAssert((position>=0)&&(position<=1.0), @"Position must be between 0.0 and 1.0");
+    
+    
+    if (![color1 red:&r1 green:&g1 blue:&b1 alpha:&a1]) return nil;
+    if (![color2 red:&r2 green:&g2 blue:&b2 alpha:&a2]) return nil;
+    
+    r = r1 * (1.0-position) + r2 * position;
+    g = g1 * (1.0-position) + g2 * position;
+    b = b1 * (1.0-position) + b2 * position;
+    a = a1 * (1.0-position) + a2 * position;
+    
+    
+    UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+    
+    
+    
+    return color;
+    
 }
 
 #pragma mark UIColor_Expanded initialization
