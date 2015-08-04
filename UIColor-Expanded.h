@@ -7,6 +7,8 @@
 //
 // forked from https://github.com/thetaplab/uicolor-utilities
 //
+// Replace "UIColor" with "SKColor" for Sprite Kit compatibility (iOS and Mac)!
+// 
 
 #import <UIKit/UIKit.h>
 
