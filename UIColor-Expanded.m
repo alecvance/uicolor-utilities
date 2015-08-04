@@ -1,9 +1,7 @@
 //
 //  UIColor-Expanded.m
-//  Aquarium
 //
 //  Created by Alec Vance on 9/14/10.
-//  Copyright 2010 Juggleware, LLC. All rights reserved.
 //
 
 #import "UIColor-Expanded.h"

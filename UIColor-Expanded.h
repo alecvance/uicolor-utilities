@@ -1,11 +1,9 @@
 //
 //  UIColor-Expanded.h
-//  Aquarium
 //
 //  Created by Alec Vance on 9/14/10.
-//  Copyright 2010 Juggleware, LLC. All rights reserved.
 //
-//based on code from Erica Sadun at http://arstechnica.com/apple/guides/2009/02/iphone-development-accessing-uicolor-components.ars
+// based on code from Erica Sadun at http://arstechnica.com/apple/guides/2009/02/iphone-development-accessing-uicolor-components.ars
 //
 // forked from https://github.com/thetaplab/uicolor-utilities
 //
